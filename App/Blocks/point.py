@@ -11,10 +11,11 @@ class Point():
         self.block_item = block_item
         self.inout = inout
         self.validate = validate
+        self.connections = []
         self.add_connection_point()
 
     def add_connection_point(self):
-        self.circle = QGraphicsEllipseItem(self.x - 3, self.y - 3, 6, 6, self.block_item)
+        self.circle = QGraphicsEllipseItem(self.x - 4, self.y - 4, 8, 8, self.block_item)
         self.circle.setPen(QPen(Qt.GlobalColor.red))
         self.circle.setBrush(QBrush(Qt.GlobalColor.blue))
         #self.scene.addItem(circle)
@@ -28,6 +29,8 @@ class Point():
             text.setPos(self.x - text.boundingRect().width() - 5, self.y - 8)
         else:
             text.setPos(self.x + 5, self.y - 8)
+
+    
 
     def add_conection_block(self, block, point):
         self.block_connect = block
