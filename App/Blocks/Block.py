@@ -55,7 +55,7 @@ class BlockItem(QGraphicsRectItem):
         }
         return QColor(colors.get(block_type, "#FF4500")) 
 
-    #Aun no funciona dibujar los puntos de conexion
+    
     def add_connection_point(self, point_name, label, inout=False):
         point = self.connection_points[point_name]
         circle = Point(point.x(), point.y(), label, self, inout)
