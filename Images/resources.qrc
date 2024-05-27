@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="images">
+    <file>menu.png</file>
+    <file>log_out.png</file>
+    <file>log_out_white.png</file>
+    <file>python.png</file>
+  </qresource>
+</RCC>

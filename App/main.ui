@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">Background-color: rgb(43, 48, 77);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="icon_only_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>171</width>
+      <height>671</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Futura Medium</family>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background-color: rgb(63, 67, 103);
+	border-radius: 25;
+}
+
+QPushButton {
+  min-width: 70px;
+  height: 40px;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 10px;
+  border: 2px solid #55C590;
+  background: #55C590;
+}
+QPushButton:hover {
+  background: #fff;
+  color: #adb5bd
+}
+
+QLineEdit {
+
+}
+</string>
+    </property>
+    <widget class="QPushButton" name="add_script">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>630</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Futura Medium</family>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_script">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Futura Medium</family>
+       <pointsize>18</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Scripts</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="text_script_add">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>600</y>
+       <width>131</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Futura</family>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px solid #636B97;
+background-color: #636B97;	
+border-radius: 10;</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="WorkspaceWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>10</y>
+      <width>881</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background-color: rgb(21, 29, 47);
+	border-radius: 25;
+}
+
+QTextEdit {
+	
+	border-color: rgb(118, 171, 174);
+}</string>
+    </property>
+    <widget class="QGraphicsView" name="graphicsView">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>881</width>
+       <height>401</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="icon_only_widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>10</y>
+      <width>151</width>
+      <height>671</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background-color: rgb(63, 67, 103);
+	border-radius: 25;
+}
+
+QPushButton {
+  min-width: 70px;
+  height: 40px;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 10px;
+  border: 2px solid #55C590;
+  background: #55C590;
+}
+QPushButton:hover {
+  background: #fff;
+  color: #adb5bd
+}
+</string>
+    </property>
+    <widget class="QPushButton" name="add_variable">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>630</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Futura Medium</family>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_variable">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Futura Medium</family>
+       <pointsize>18</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Variable</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="text_variable_add">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>600</y>
+       <width>131</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Futura</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px solid #636B97;
+background-color: #636B97;	
+border-radius: 10
+;</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="LogWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>430</y>
+      <width>881</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background-color: rgb(99, 107, 151);
+	border-radius: 25;
+}
+
+QTextEdit {
+	
+	border-color: rgb(118, 171, 174);
+}</string>
+    </property>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="geometry">
+      <rect>
+       <x>23</x>
+       <y>20</y>
+       <width>831</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1280</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionImport"/>
+    <addaction name="actionExport"/>
+   </widget>
+   <widget class="QMenu" name="menuBlock">
+    <property name="title">
+     <string>Block</string>
+    </property>
+    <addaction name="actionSearch"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuBlock"/>
+  </widget>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="text">
+    <string>Search</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
