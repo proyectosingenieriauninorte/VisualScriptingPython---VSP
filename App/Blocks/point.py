@@ -4,12 +4,13 @@ from PyQt6.QtCore import Qt
 
 class Point():
 
-    def __init__(self, x, y, label, block_item, inout):
+    def __init__(self, x, y, label, block_item, inout, validate=False):
         self.x = x
         self.y = y
         self.label = label
         self.block_item = block_item
         self.inout = inout
+        self.validate = validate
         self.add_connection_point()
 
     def add_connection_point(self):

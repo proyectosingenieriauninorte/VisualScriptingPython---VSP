@@ -97,13 +97,18 @@ class BlockItem(QGraphicsRectItem):
                             if ((self.windows.line_blocks[0][0] != self) and (self.windows.line_blocks[0][2].inout != point.inout)) or self.windows.line_blocks[0][2] == point:
                                 if self.windows.line_blocks[0][2] == point:
                                     print("Same point")
-                                else: 
-                                    print("Conection between blocks")
-                                    self.windows.line_blocks[0][2].add_conection_block(self, point)
-                                    point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
-                                    new_pos = event.scenePos()
-                                    line_temp = Line(self.windows.line_blocks[0][1], new_pos)
-                                    self.scene.addItem(line_temp)
+                                else:
+                                    if (point.validate == False) and (self.windows.line_blocks[0][2].validate == False):
+                                        print("Conection between blocks")
+                                        self.windows.line_blocks[0][2].add_conection_block(self, point)
+                                        point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
+                                        new_pos = event.scenePos()
+                                        point.validate = True
+                                        self.windows.line_blocks[0][2].validate = True
+                                        line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                        self.scene.addItem(line_temp)
+                                    else:
+                                        print("Error")
                                 self.windows.line_blocks[0][0].points[self.windows.line_blocks[0][2].label].circle.setBrush(QBrush(Qt.GlobalColor.blue))
                                 self.windows.reset_line_blocks()
 
