@@ -6,7 +6,7 @@ from App.Blocks.point import Point
 from App.Blocks.edge import Line
 
 class BlockItem(QGraphicsRectItem):
-    def __init__(self, scene, block_type, title, x, y, windows, width=180, height=100):
+    def __init__(self, scene, block_type, title, x, y, windows, LLNode, width=180, height=120):
         super().__init__(x, y, width, height)
         self.windows = windows
         self.x = x
@@ -18,6 +18,9 @@ class BlockItem(QGraphicsRectItem):
         self.setBrush(QBrush(QColor("#333333")))
         self.points = {}
 
+        #Linked List Node
+        self.LLNode = LLNode
+        
         # Draw header
         self.header_height = 20
         self.header_rect = QRectF(x, y, width, self.header_height)
@@ -30,6 +33,7 @@ class BlockItem(QGraphicsRectItem):
 
         # Points of connection
         blocksDesing.drawPointsConnections(self, block_type, x, y, width)
+        
 
     def get_header_color(self, block_type):
         colors = {
@@ -107,6 +111,20 @@ class BlockItem(QGraphicsRectItem):
                                         self.windows.line_blocks[0][2].validate = True
                                         line_temp = Line(self.windows.line_blocks[0][1], new_pos)
                                         self.scene.addItem(line_temp)
+                                        if (("flow" in self.windows.line_blocks[0][2].label) and ("flow" in point.label)):
+                                            self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0] = self.LLNode
+                                            self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode
+                                            
+                                        else:
+                                            self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0]
+                                            self.LLNode.ins[point.label][1] = self.windows.line_blocks[0][0].LLNode
+                                            self.LLNode.ins[point.label][2] = self.windows.line_blocks[0][2].label
+                                        print(f"Bloque 1 creo... es {self.windows.line_blocks[0][0].block_type} y el point es {self.windows.line_blocks[0][2].label}")
+                                        print(self.windows.line_blocks[0][0].LLNode.ins)
+                                        print(self.windows.line_blocks[0][0].LLNode.outs)
+                                        print(f"Bloque 2 creo... es {self.block_type} y el point es {point.label}")
+                                        print(self.LLNode.ins)
+                                        print(self.LLNode.outs)
                                     else:
                                         print("Error")
                                 self.windows.line_blocks[0][0].points[self.windows.line_blocks[0][2].label].circle.setBrush(QBrush(Qt.GlobalColor.blue))
