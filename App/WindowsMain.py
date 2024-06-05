@@ -1,6 +1,7 @@
 from App.Blocks.Block import BlockItem
 from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QWidget, QMenu, QLineEdit, QTextEdit, QMenuBar, QGraphicsScene, QGraphicsView
 from PyQt6 import QtCore, QtGui
+from App.Blocks.LinkedList import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -51,6 +52,7 @@ class MainWindow(QMainWindow):
 "")
         self.icon_only_widget.setObjectName("icon_only_widget")
         self.add_script = QPushButton(parent=self.icon_only_widget)
+        self.add_script.clicked.connect(self.run)
         self.add_script.setGeometry(QtCore.QRect(30, 630, 111, 24))
         font = QtGui.QFont()
         font.setFamily("Futura Medium")
@@ -212,7 +214,7 @@ class MainWindow(QMainWindow):
         context_menu = QMenu(self)
 
         # Lista de bloques a añadir
-        block_types = ["If", "On_Start", "On_Update", "cycle", "set_var", "set_arr", "call_var", "log", "branch", "compare", "for_iter", "add", "sub", "mult", "div", "div_int", "mod", "append_arr"]
+        block_types = ["If", "On_Start", "On_Update", "str_lit", "cycle", "set_var", "set_arr", "call_var", "log", "branch", "compare", "for_iter", "add", "sub", "mult", "div", "div_int", "mod", "append_arr"]
         
         # Crear acciones para cada bloque
         for block_type in block_types:
@@ -224,12 +226,30 @@ class MainWindow(QMainWindow):
 
     def add_block(self, block_type, pos):
         # Convertir la posición del clic a coordenadas de la escena
+        
+        if block_type == "On_Start":
+            Node = On_Start_Node(block_type, {}, {})
+            self.Sequence = LinkedList(Node)
+        elif block_type == "log":
+            Node = log_Node(block_type, {}, {})
+        elif block_type == "str_lit":
+            Node = literal_Node(block_type, {}, {})
+        elif block_type == "If":
+            Node = if_Node(block_type, {}, {})
+        elif block_type == "compare":
+            Node = compare_Node(block_type, {}, {})
+        
         scene_pos = self.work_area.mapToScene(pos)
-        block = BlockItem(self.graphics_scene, block_type, block_type, scene_pos.x(), scene_pos.y(), self)  # Pasar self.graphics_scene como argumento
+        block = BlockItem(self.graphics_scene, block_type, block_type, scene_pos.x(), scene_pos.y(), self, Node)  # Pasar self.graphics_scene como argumento
         self.graphics_scene.addItem(block)
+        
+        
 
     def add_line_block(self, block):
         self.line_blocks.append(block)
     
     def reset_line_blocks(self):
         self.line_blocks = []
+        
+    def run(self):
+        self.Sequence.run()
