@@ -123,7 +123,7 @@ class if_Node():
                 self.outs['flow_out'][0] = self.outs['flow_false'][0]
             #print(f"after all, next block is: {self.outs['flow_out'][0]}")
         except:
-            pass
+            self.outs['flow_out'] = [None]
             #print("Condition could not be parsed to Boolean, no flow checked.")
             
 class compare_Node():
@@ -178,7 +178,10 @@ class compare_Node():
                 pass
                 #print("A and B must belong to the same type of value")
         except:
-            pass
+            self.outs['>'] = [None, None, None]
+            self.outs['<'] = [None, None, None]
+            self.outs['='] = [None, None, None]
+            self.outs['!='] = [None, None, None]
             
 class add_Node():
     def __init__(self, title, ins, outs):
