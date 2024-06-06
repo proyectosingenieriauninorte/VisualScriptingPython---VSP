@@ -210,15 +210,23 @@ class BlockItem(QGraphicsRectItem):
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             if self:
-                #current = self.LLNode
-                #prev = self.LLNode.ins['flow_in'][0] #nodo
-                #next = self.LLNode.ins['flow_out'][0] #nodo
-                #for key in next.ins:
-                #    if key  != "flow_in":
-                #        if next.ins[key][1] == current:
-                #            next.ins[key] = [None, None, None]
-                #
-                    
+                current = self.LLNode
+                for key in current.outs:
+                    if key != "flow_out":
+                        try:
+                            current.outs[key][1].ins[current.outs[key][2]] = [None, None, None]
+                        except:
+                            pass
+                    else:
+                        try:
+                            current.outs["flow_out"][0].ins["flow_in"] = [None]
+                        except:
+                            pass
+                try:
+                    current.ins['flow_in'][0].outs["flow_out"] = [None]
+                except:
+                    pass
+                
                 for point in self.points.values():
                     if point.point_connect != None:
                         point.point_connect.validate = False
