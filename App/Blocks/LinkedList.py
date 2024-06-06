@@ -61,9 +61,11 @@ class int_literal():
         self.outs = outs 
         self.outs['value'] = [None]
     def intHasChanged(self, text):
-        self.outs['value'] = [int(text)]
-        print(f"text: {[text]}, int: {[int(text)]}")
-        print(f"int has changed: {self.outs['value']}")
+        try:
+            self.outs['value'][0] = int(text)
+            print(f"int has changed: {self.outs['value']}")
+        except:
+            pass
         
 class bool_literal():
     def __init__(self, title, ins, outs):
@@ -80,8 +82,11 @@ class float_literal():
         self.outs = outs 
         self.outs['value'] = [None]
     def floatHasChanged(self, text):
-        self.outs['value'][0] = float(text)
-        print(f"float has changed: {self.outs['value']}")
+        try:
+            self.outs['value'][0] = float(text)
+            print(f"float has changed: {self.outs['value']}")
+        except:
+            pass
         
 class if_Node():
     def __init__(self, title, ins, outs):
