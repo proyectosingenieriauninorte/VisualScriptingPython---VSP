@@ -127,6 +127,9 @@ class BlockItem(QGraphicsRectItem):
                                                 self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0]
                                                 self.LLNode.ins[point.label][1] = self.windows.line_blocks[0][0].LLNode
                                                 self.LLNode.ins[point.label][2] = self.windows.line_blocks[0][2].label
+                                                
+                                                self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][1] = self.LLNode
+                                                self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][2] = point.label
                                                 print("Conection between blocks")
                                                 self.windows.line_blocks[0][2].add_conection_block(self, point)
                                                 point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
@@ -157,6 +160,9 @@ class BlockItem(QGraphicsRectItem):
                                                 self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][0] = self.LLNode.outs[point.label][0]
                                                 self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][1] = self.LLNode
                                                 self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][2] = point.label
+                                                
+                                                self.LLNode.outs[point.label][1] = self.windows.line_blocks[0][0].LLNode
+                                                self.LLNode.outs[point.label][2] = self.windows.line_blocks[0][2].label
                                                 print("Conection between blocks")
                                                 self.windows.line_blocks[0][2].add_conection_block(self, point)
                                                 point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
@@ -204,6 +210,15 @@ class BlockItem(QGraphicsRectItem):
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             if self:
+                #current = self.LLNode
+                #prev = self.LLNode.ins['flow_in'][0] #nodo
+                #next = self.LLNode.ins['flow_out'][0] #nodo
+                #for key in next.ins:
+                #    if key  != "flow_in":
+                #        if next.ins[key][1] == current:
+                #            next.ins[key] = [None, None, None]
+                #
+                    
                 for point in self.points.values():
                     if point.point_connect != None:
                         point.point_connect.validate = False
