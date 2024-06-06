@@ -23,11 +23,15 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
     git clone https://github.com/jcarrenoa/VisualScriptingPython---VSP.git
     ```
 2. **Abre una terminal en el directorio del proyecto y crea un entorno virtual**
-## Funcionalidades Implementadas
-
+   
 3. **Instala los requerimientos del proyecto**
  ```pip install -r "requeriments txt" ```
+
 4. **Ejecuta desde el main el programa**
+
+   
+## Funcionalidades Implementadas
+
 
 - **Bloques de Variables:**
   Permiten la creación y manipulación de variables dentro del flujo de trabajo.
