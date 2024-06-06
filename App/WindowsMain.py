@@ -2,6 +2,7 @@ from App.Blocks.Block import BlockItem
 from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QWidget, QMenu, QLineEdit, QTextEdit, QMenuBar, QGraphicsScene, QGraphicsView
 from PyQt6 import QtCore, QtGui
 from App.Blocks.LinkedList import *
+from PyQt6.QtGui import QFont
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -52,7 +53,6 @@ class MainWindow(QMainWindow):
 "")
         self.icon_only_widget.setObjectName("icon_only_widget")
         self.add_script = QPushButton(parent=self.icon_only_widget)
-        self.add_script.clicked.connect(self.run)
         self.add_script.setGeometry(QtCore.QRect(30, 630, 111, 24))
         font = QtGui.QFont()
         font.setFamily("Futura Medium")
@@ -164,12 +164,40 @@ class MainWindow(QMainWindow):
 "QTextEdit {\n"
 "    \n"
 "    border-color: rgb(118, 171, 174);\n"
+"}\n"
+"\n"
+"QPushButton {\n"
+"  min-width: 70px;\n"
+"  height: 40px;\n"
+"  color: #fff;\n"
+"  padding: 5px 10px;\n"
+"  font-weight: bold;\n"
+"  cursor: pointer;\n"
+"  transition: all 0.3s ease;\n"
+"  position: relative;\n"
+"  display: inline-block;\n"
+"  outline: none;\n"
+"  border-radius: 10px;\n"
+"  border: 2px solid #55C590;\n"
+"  background: #55C590;\n"
+"}\n"
+"QPushButton:hover {\n"
+"  background: #fff;\n"
+"  color: #adb5bd\n"
 "}")
         self.LogWidget.setObjectName("LogWidget")
+        self.pushButton = QPushButton(parent=self.LogWidget)
+        self.pushButton.setGeometry(QtCore.QRect(20, 210, 101, 24))
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setText("Start")
+        self.pushButton.clicked.connect(self.run)
         self.cmd = QTextEdit(parent=self.LogWidget)
-        self.cmd.setGeometry(QtCore.QRect(23, 20, 831, 211))
+        self.cmd.setGeometry(QtCore.QRect(23, 20, 831, 171))
         self.cmd.setReadOnly(True)
         self.cmd.setObjectName("cmd")
+        font = QFont()
+        font.setPointSize(14)  # Cambia el tamaño de letra aquí
+        self.cmd.setFont(font)
         self.setCentralWidget(self.centralwidget)
         self.menuBar = QMenuBar(parent=self)
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 1112, 22))
@@ -265,3 +293,5 @@ class MainWindow(QMainWindow):
         
     def run(self):
         self.Sequence.run()
+        scrollbar = self.cmd.verticalScrollBar()
+        scrollbar.setValue(scrollbar.maximum())
