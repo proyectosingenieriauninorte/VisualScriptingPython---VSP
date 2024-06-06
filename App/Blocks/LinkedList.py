@@ -27,19 +27,52 @@ class log_Node():
         self.outs['flow_out'] = [None]
         self.ins['flow_in'] = [None]
     def execute(self):
-        self.ins['value'][0] = self.ins['value'][1].outs[self.ins['value'][2]][0]
         print("Sequence continued with log block")
-        print(f"printed from log: {self.ins['value'][0]}")
-        
-class literal_Node():
+        self.ins['value'][0] = self.ins['value'][1].outs[self.ins['value'][2]][0]
+        try:
+            str(self.ins['value'][0])
+            print(f"printed from log: {self.ins['value'][0]}")
+        except:
+            print("Code Block log, could not convert value to string, no print available")
+          
+class str_literal():
     def __init__(self, title, ins, outs):
         self.title = title
         self.ins = ins
         self.outs = outs 
         self.outs['value'] = [None]
-    def textHasChanged(self, text):
-        self.outs['value'] = [text]
-        print(f"Text has changed: {self.outs['value']}")
+    def strHasChanged(self, text):
+        self.outs['value'][0] = str(text)
+        print(f"str has changed: {self.outs['value']}")
+        
+class int_literal():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs 
+        self.outs['value'] = [None]
+    def intHasChanged(self, text):
+        self.outs['value'] = [int(text)]
+        print(f"text: {[text]}, int: {[int(text)]}")
+        print(f"int has changed: {self.outs['value']}")
+        
+class bool_literal():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs 
+        self.outs['true'] = [True]
+        self.outs['false'] = [False]
+        
+class float_literal():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs 
+        self.outs['value'] = [None]
+    def floatHasChanged(self, text):
+        self.outs['value'][0] = float(text)
+        print(f"float has changed: {self.outs['value']}")
         
 class if_Node():
     def __init__(self, title, ins, outs):
@@ -59,13 +92,17 @@ class if_Node():
         print(f"with index: {self.ins['condition'][2]}")
         self.ins['condition'][0] = self.ins['condition'][1].outs[self.ins['condition'][2]][0]
         print(f"new value for condition: {self.ins['condition'][0]}")
-        if self.ins['condition'][0] == None:
-            self.outs['flow_out'][0] = None
-        elif self.ins['condition'][0] == True:
-            self.outs['flow_out'][0] = self.outs['flow_true'][0]
-        elif self.ins['condition'][0] == False:
-            self.outs['flow_out'][0] = self.outs['flow_false'][0]
-        print(f"after all, next block is: {self.outs['flow_out'][0]}")
+        try:
+            bool(self.ins['condition'][0])
+            if self.ins['condition'][0] == None:
+                self.outs['flow_out'][0] = None
+            elif self.ins['condition'][0] == True:
+                self.outs['flow_out'][0] = self.outs['flow_true'][0]
+            elif self.ins['condition'][0] == False:
+                self.outs['flow_out'][0] = self.outs['flow_false'][0]
+            print(f"after all, next block is: {self.outs['flow_out'][0]}")
+        except:
+            print("Condition could not be parsed to Boolean, no flow checked.")
             
 class compare_Node():
     def __init__(self, title, ins, outs):
@@ -86,28 +123,118 @@ class compare_Node():
         self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
         av = self.ins['A'][0]
         bv = self.ins['B'][0]
-        if av < bv:
-            self.outs['<'][0] = True
-            print("< true")
+        if type(av) == type(bv):
+            if av < bv:
+                self.outs['<'][0] = True
+                print("< true")
+            else:
+                self.outs['<'][0] = False
+                print("< false")
+            if av > bv:
+                self.outs['>'][0] = True
+                print("> true")
+            else:
+                self.outs['>'][0] = False
+                print("> false")
+            if av == bv:
+                self.outs['='][0] = True
+                print("= true")
+            else:
+                self.outs['='][0] = False
+                print("= false")
+            if av != bv:
+                self.outs['!='][0] = True
+                print("!= true")
+            else:
+                self.outs['!='][0] = False
+                print("!= false")
         else:
-            self.outs['<'][0] = False
-            print("< false")
-        if av > bv:
-            self.outs['>'][0] = True
-            print("> true")
-        else:
-            self.outs['>'][0] = False
-            print("> false")
-        if av == bv:
-            self.outs['='][0] = True
-            print("= true")
-        else:
-            self.outs['='][0] = False
-            print("= false")
-        if av != bv:
-            self.outs['!='][0] = True
-            print("!= true")
-        else:
-            self.outs['!='][0] = False
-            print("!= false")
+            print("A and B must belong to the same type of value")
+            
+class add_Node():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs
+        self.outs['flow_out'] = [None]
+        self.ins['flow_in'] = [None]
+        self.ins['A'] = [None, None, None]
+        self.ins['B'] = [None, None, None]
+        self.outs['result'] = [None]
+        
+    def execute(self):
+        self.ins['A'][0] = self.ins['A'][1].outs[self.ins['A'][2]][0]
+        self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
+        av = self.ins['A'][0]
+        bv = self.ins['B'][0]
+        if (type(av) ==  type(bv)):
+            if type(av) == bool:
+                self.outs['result'][0] = av or bv
+            else:
+                self.outs['result'][0] = av + bv
+        elif (type(av) != str and type(bv) != str) or (type(av) != bool and type(bv) != bool):
+            self.outs['result'][0] = av or bv
+        
+class sub_Node():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs
+        self.outs['flow_out'] = [None]
+        self.ins['flow_in'] = [None]
+        self.ins['A'] = [None, None, None]
+        self.ins['B'] = [None, None, None]
+        self.outs['result'] = [None]
+        
+    def execute(self):
+        self.ins['A'][0] = self.ins['A'][1].outs[self.ins['A'][2]][0]
+        self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
+        av = self.ins['A'][0]
+        bv = self.ins['B'][0]
+        if (type(av) == int or type(av) == float) and (type(bv) == int or type(bv) == float):
+            self.outs['result'][0] = av - bv
+            
+class mult_Node():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs
+        self.outs['flow_out'] = [None]
+        self.ins['flow_in'] = [None]
+        self.ins['A'] = [None, None, None]
+        self.ins['B'] = [None, None, None]
+        self.outs['result'] = [None]
+        
+    def execute(self):
+        self.ins['A'][0] = self.ins['A'][1].outs[self.ins['A'][2]][0]
+        self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
+        av = self.ins['A'][0]
+        bv = self.ins['B'][0]
+        if (type(av) == int or type(av) == float) and (type(bv) == int or type(bv) == float):
+            self.outs['result'][0] = av - bv
+        elif type(av) == bool and type(bv) == bool:
+            self.outs['result'][0] = av and bv
+            
+class div_Node():
+    def __init__(self, title, ins, outs):
+        self.title = title
+        self.ins = ins
+        self.outs = outs
+        self.outs['flow_out'] = [None]
+        self.ins['flow_in'] = [None]
+        self.ins['A'] = [None, None, None]
+        self.ins['B'] = [None, None, None]
+        self.outs['result'] = [None]
+        
+    def execute(self):
+        self.ins['A'][0] = self.ins['A'][1].outs[self.ins['A'][2]][0]
+        self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
+        av = self.ins['A'][0]
+        bv = self.ins['B'][0]
+        if (type(av) == int or type(av) == float) and (type(bv) == int or type(bv) == float) and (bv != 0):
+            self.outs['result'][0] = av / bv
+        
+    
+            
+        
     

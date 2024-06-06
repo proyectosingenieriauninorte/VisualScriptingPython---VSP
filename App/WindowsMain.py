@@ -214,7 +214,7 @@ class MainWindow(QMainWindow):
         context_menu = QMenu(self)
 
         # Lista de bloques a añadir
-        block_types = ["If", "On_Start", "On_Update", "str_lit", "cycle", "set_var", "set_arr", "call_var", "log", "branch", "compare", "for_iter", "add", "sub", "mult", "div", "div_int", "mod", "append_arr"]
+        block_types = ["If", "On_Start", "On_Update", "str_lit", "int_lit", "float_lit", "bool_lit", "cycle", "set_var", "set_arr", "call_var", "log", "branch", "compare", "for_iter", "add", "sub", "mult", "div", "div_int", "mod", "append_arr"]
         
         # Crear acciones para cada bloque
         for block_type in block_types:
@@ -233,11 +233,25 @@ class MainWindow(QMainWindow):
         elif block_type == "log":
             Node = log_Node(block_type, {}, {})
         elif block_type == "str_lit":
-            Node = literal_Node(block_type, {}, {})
+            Node = str_literal(block_type, {}, {})
+        elif block_type == "int_lit":
+            Node = int_literal(block_type, {}, {})
+        elif block_type == "float_lit":
+            Node = float_literal(block_type, {}, {})
+        elif block_type == "bool_lit":
+            Node = bool_literal(block_type, {}, {})
         elif block_type == "If":
             Node = if_Node(block_type, {}, {})
         elif block_type == "compare":
             Node = compare_Node(block_type, {}, {})
+        elif block_type == "add":
+            Node = add_Node(block_type, {}, {})
+        elif block_type == "sub":
+            Node = sub_Node(block_type, {}, {})
+        elif block_type == "mult":
+            Node = mult_Node(block_type, {}, {})
+        elif block_type == "div":
+            Node = div_Node(block_type, {}, {})
         
         scene_pos = self.work_area.mapToScene(pos)
         block = BlockItem(self.graphics_scene, block_type, block_type, scene_pos.x(), scene_pos.y(), self, Node)  # Pasar self.graphics_scene como argumento
