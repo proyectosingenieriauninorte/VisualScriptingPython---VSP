@@ -98,27 +98,67 @@ class BlockItem(QGraphicsRectItem):
                             self.windows.add_line_block((self, event.scenePos(), point))
                             point.circle.setBrush(QBrush(Qt.GlobalColor.green))
                         else:
-                            if ((self.windows.line_blocks[0][0] != self) and (self.windows.line_blocks[0][2].inout != point.inout)) or self.windows.line_blocks[0][2] == point:
+                            if ((self.windows.line_blocks[0][0] != self) and (self.windows.line_blocks[0][2].inout != point.inout)) or (self.windows.line_blocks[0][2] == point):
                                 if self.windows.line_blocks[0][2] == point:
                                     print("Same point")
                                 else:
                                     if (point.validate == False) and (self.windows.line_blocks[0][2].validate == False):
-                                        print("Conection between blocks")
-                                        self.windows.line_blocks[0][2].add_conection_block(self, point)
-                                        point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
-                                        new_pos = event.scenePos()
-                                        point.validate = True
-                                        self.windows.line_blocks[0][2].validate = True
-                                        line_temp = Line(self.windows.line_blocks[0][1], new_pos)
-                                        self.scene.addItem(line_temp)
-                                        if (("flow" in self.windows.line_blocks[0][2].label) and ("flow" in point.label)):
-                                            self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0] = self.LLNode
-                                            self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode
-                                            
+                                
+                                        
+                                        if (self.windows.line_blocks[0][2].inout == True):
+                                            if (("flow" in self.windows.line_blocks[0][2].label) and ("flow" in point.label)):
+                                                self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0] = self.LLNode
+                                                self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode
+                                                
+                                                print("Conection between blocks")
+                                                self.windows.line_blocks[0][2].add_conection_block(self, point)
+                                                point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
+                                                new_pos = event.scenePos()
+                                                point.validate = True
+                                                self.windows.line_blocks[0][2].validate = True
+                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                self.scene.addItem(line_temp)
+                                                
+                                            elif (("flow" in self.windows.line_blocks[0][2].label) or ("flow" in point.label)):
+                                                print("flow con no flow")
+                                            else:
+                                                self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0]
+                                                self.LLNode.ins[point.label][1] = self.windows.line_blocks[0][0].LLNode
+                                                self.LLNode.ins[point.label][2] = self.windows.line_blocks[0][2].label
+                                                print("Conection between blocks")
+                                                self.windows.line_blocks[0][2].add_conection_block(self, point)
+                                                point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
+                                                new_pos = event.scenePos()
+                                                point.validate = True
+                                                self.windows.line_blocks[0][2].validate = True
+                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                self.scene.addItem(line_temp)
                                         else:
-                                            self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0]
-                                            self.LLNode.ins[point.label][1] = self.windows.line_blocks[0][0].LLNode
-                                            self.LLNode.ins[point.label][2] = self.windows.line_blocks[0][2].label
+                                            if (("flow" in self.windows.line_blocks[0][2].label) and ("flow" in point.label)):
+                                                self.LLNode.outs[point.label][0] = self.windows.line_blocks[0][0].LLNode
+                                                self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][0] = self.LLNode
+                                                print("Conection between blocks")
+                                                self.windows.line_blocks[0][2].add_conection_block(self, point)
+                                                point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
+                                                new_pos = event.scenePos()
+                                                point.validate = True
+                                                self.windows.line_blocks[0][2].validate = True
+                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                self.scene.addItem(line_temp)
+                                            elif (("flow" in self.windows.line_blocks[0][2].label) or ("flow" in point.label)):
+                                                print("flow con no flow")    
+                                            else:
+                                                self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][0] = self.LLNode.outs[point.label][0]
+                                                self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][1] = self.LLNode
+                                                self.windows.line_blocks[0][0].LLNode.ins[self.windows.line_blocks[0][2].label][2] = point.label
+                                                print("Conection between blocks")
+                                                self.windows.line_blocks[0][2].add_conection_block(self, point)
+                                                point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
+                                                new_pos = event.scenePos()
+                                                point.validate = True
+                                                self.windows.line_blocks[0][2].validate = True
+                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                self.scene.addItem(line_temp)
                                         print(f"Bloque 1 creo... es {self.windows.line_blocks[0][0].block_type} y el point es {self.windows.line_blocks[0][2].label}")
                                         print(self.windows.line_blocks[0][0].LLNode.ins)
                                         print(self.windows.line_blocks[0][0].LLNode.outs)
