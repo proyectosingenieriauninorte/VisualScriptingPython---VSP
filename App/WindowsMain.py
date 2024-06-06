@@ -255,8 +255,8 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
         context_menu = QMenu(self)
 
         # Lista de bloques a añadir
-        block_types = ["If", "On_Start", "On_Update", "str_lit", "int_lit", "float_lit", "bool_lit", "cycle", "set_var", "set_arr", "call_var", "log", "branch", "compare", "for_iter", "add", "sub", "mult", "div", "div_int", "mod", "append_arr"]
-        
+        block_types = ["If", "On_Start", "str_lit", "int_lit", "float_lit", "bool_lit", "log", "compare", "add", "sub", "mult", "div"]
+        #future_blocktypes = ["On_Update", "cycle", "set_var", "set_arr", "call_var", "branch", "for_iter", "div_int", "mod", "append_arr"]
         # Crear acciones para cada bloque
         for block_type in block_types:
             action = QtGui.QAction(block_type, self)
