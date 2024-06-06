@@ -46,9 +46,8 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
   Bloques que permiten la ejecución de diferentes caminos en el flujo de trabajo basado en condiciones específicas.
 
   Imagenes de ejemplo: 
-  https://raw.githubusercontent.com/jcarrenoa/VisualScriptingPython---VSP/main/Img.jpeg
-
   
+![image](https://github.com/jcarrenoa/VisualScriptingPython---VSP/assets/98894997/b545e2af-3b72-4032-8f15-f8a99ec3a7ca)
 
 ## Sugerencias para Futuras Funcionalidades
 
