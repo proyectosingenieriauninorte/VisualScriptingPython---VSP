@@ -12,6 +12,7 @@ class Point():
         self.inout = inout
         self.validate = validate
         self.connections = []
+        self.line = None
         self.block_connect = None
         self.point_connect = None
         self.add_connection_point()

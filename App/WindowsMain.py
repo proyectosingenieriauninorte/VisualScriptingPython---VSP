@@ -256,8 +256,6 @@ class MainWindow(QMainWindow):
         scene_pos = self.work_area.mapToScene(pos)
         block = BlockItem(self.graphics_scene, block_type, block_type, scene_pos.x(), scene_pos.y(), self, Node)  # Pasar self.graphics_scene como argumento
         self.graphics_scene.addItem(block)
-        
-        
 
     def add_line_block(self, block):
         self.line_blocks.append(block)

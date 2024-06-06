@@ -1,47 +1,57 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QMainWindow, QApplication
-from PyQt6.QtCore import Qt
+import sys
+from PyQt6.QtCore import QPointF, Qt, QEvent
+from PyQt6.QtGui import QPainterPath, QPen, QColor, QBrush, QPolygonF
+from PyQt6.QtWidgets import QApplication, QGraphicsScene, QGraphicsView, QGraphicsRectItem, QGraphicsPathItem, QGraphicsPolygonItem, QVBoxLayout, QWidget, QGraphicsItem, QGraphicsEllipseItem
+from math import atan2, cos, sin, radians, degrees
 
-class CustomBlock(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.setFixedSize(200, 100)
-
-        # Crear los widgets
-        self.label = QLabel("Etiqueta")
-        self.button1 = QPushButton("Botón 1")
-        self.button2 = QPushButton("Botón 2")
-
-        # Crear los layouts
-        button_layout = QVBoxLayout()
-        button_layout.addWidget(self.button1)
-        button_layout.addWidget(self.button2)
-
-        main_layout = QHBoxLayout()
-        main_layout.addLayout(button_layout)
-        main_layout.addStretch()
-        main_layout.addWidget(self.label, alignment=Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignRight)
-
-        self.setStyleSheet("QWidget{background-color:Grey;}")
-
-        self.setLayout(main_layout)
-
-class MainWindow(QMainWindow):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        # Crear instancias de CustomBlock
-        block1 = CustomBlock(self)
+        self.scene = QGraphicsScene()
+        self.view = QGraphicsView(self.scene)
 
-        # Crear el layout principal
-        block1.move(200, 400)
+        # Crear un cuadrado
+        self.square = QGraphicsRectItem(50, 50, 200, 200)
+        self.square.setPen(QPen(Qt.GlobalColor.blue))
+        self.scene.addItem(self.square)
 
-        # Crear un widget central y establecer el layout principal
+        # Crear un círculo dentro del cuadrado
+        self.circle = QGraphicsEllipseItem(100, 100, 100, 100)
+        self.circle.setPen(QPen(Qt.GlobalColor.red))
+        self.scene.addItem(self.circle)
 
-        self.setFixedSize(500, 1000)
+        # Habilitar la detección de eventos de mouse en la vista
+        self.view.setMouseTracking(True)
+        self.view.viewport().installEventFilter(self)
 
-if __name__ == "__main__":
-    app = QApplication([])
-    window = MainWindow()
-    window.show()
-    app.exec()
+        layout = QVBoxLayout()
+        layout.addWidget(self.view)
+        self.setLayout(layout)
+        self.setWindowTitle("Círculo Dentro de un Cuadrado")
+        self.resize(400, 400)
+
+    def eventFilter(self, source, event):
+        if event.type() == QEvent.Type.MouseButtonPress:
+            # Obtener la posición del clic en la escena
+            click_pos = self.view.mapToScene(event.pos())
+            print(f"Posición del clic en la escena: {click_pos}")
+
+            # Verificar si el clic está dentro del círculo
+            if self.circle.contains(self.circle.mapFromScene(click_pos)):
+                # Obtener la posición del centro del círculo relativa al cuadrado
+                circle_center = self.circle.sceneBoundingRect().center()
+                circle_center_in_square = self.square.mapFromScene(circle_center)
+                print(f"Posición del centro del círculo dentro del cuadrado: {circle_center_in_square}")
+
+        return super().eventFilter(source, event)
+
+# Crear la aplicación
+app = QApplication(sys.argv)
+
+# Crear una instancia de la ventana principal
+window = MainWindow()
+window.show()
+
+# Ejecutar la aplicación
+sys.exit(app.exec())

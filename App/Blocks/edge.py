@@ -1,25 +1,40 @@
 from PyQt6.QtWidgets import QGraphicsPathItem, QGraphicsPolygonItem
-from PyQt6.QtGui import QPainter, QPen, QColor, QPainterPath, QPolygonF, QBrush
-from PyQt6.QtCore import Qt, QLineF, QPointF
-from math import cos, sin, atan2, radians, degrees
+from PyQt6.QtGui import QPen, QColor, QPainterPath, QPolygonF, QBrush
+from PyQt6.QtCore import QPointF, Qt
+from math import atan2, cos, sin, radians
 
 class Line(QGraphicsPathItem):
-    def __init__(self, start_point, end_point, arrow, color=QColor(0, 255, 255), thickness=2,  style=Qt.PenStyle.DashLine):
+    def __init__(self, start_point, end_point, arrow, color=QColor(0, 255, 255), thickness=2, style=Qt.PenStyle.DashLine):
         super().__init__()
-        self.setPen(QPen(color, thickness, style))
+        self.start_point = start_point
+        self.end_point = end_point
+        self.arrow = arrow
+        self.color = color
+        self.thickness = thickness
+        self.style = style
+        self.arrow_item = None
 
+        self.setPen(QPen(self.color, self.thickness, self.style))
+        self.update_path()
+
+    def update_path(self):
         # Create a Bezier curve path
-        path = QPainterPath(start_point)
-        cp1 = QPointF((start_point.x() + end_point.x()) / 2, start_point.y())
-        cp2 = QPointF((start_point.x() + end_point.x()) / 2, end_point.y())
-        path.cubicTo(cp1, cp2, end_point)
+        path = QPainterPath(self.start_point)
+        cp1 = QPointF((self.start_point.x() + self.end_point.x()) / 2, self.start_point.y())
+        cp2 = QPointF((self.start_point.x() + self.end_point.x()) / 2, self.end_point.y())
+        path.cubicTo(cp1, cp2, self.end_point)
 
         self.setPath(path)
+        #self.update_arrow()
 
-        if arrow:
-            self.add_arrow(start_point,end_point)
+    def update_arrow(self):
+        if self.arrow_item != None:
+            pass
+
+        if self.arrow:
+            self.add_arrow(self.start_point, self.end_point)
         else:
-            self.add_arrow(end_point,start_point)
+            self.add_arrow(self.end_point, self.start_point)
     
     def add_arrow(self, start_point, end_point):
         arrow_size = 10
