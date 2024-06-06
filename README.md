@@ -24,8 +24,6 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
     cd tu_repositorio
     ```
 
-
-
 ## Funcionalidades Implementadas
 
 - **Bloques de Variables:**
@@ -45,7 +43,7 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
 ## Sugerencias para Futuras Funcionalidades
 
 1. **Integración de Bloques de Funciones Personalizadas:**
-   Permitir a los usuarios crear y reutilizar bloques personalizados que encapsulen funciones más complejas, fomentando la modularidad y reutilización de código.
+   Permitir a los usuarios crear y reutilizar bloques personalizados que encapsulen funciones más complejas (Superunits), fomentando la modularidad y reutilización de código.
 
 2. **Soporte para Estructuras de Control Avanzadas:**
    Añadir bloques que representen bucles (como `for` y `while`) y estructuras de control más avanzadas para incrementar la flexibilidad y capacidad de la herramienta.
