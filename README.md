@@ -49,3 +49,9 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
 
 2. **Soporte para Estructuras de Control Avanzadas:**
    Añadir bloques que representen bucles (como `for` y `while`) y estructuras de control más avanzadas para incrementar la flexibilidad y capacidad de la herramienta.
+
+## Team
+- Aaron Gutierrez
+- Camilo Heras
+- David Meza
+- Juan Maestre
