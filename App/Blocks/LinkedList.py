@@ -62,7 +62,7 @@ class int_literal():
         self.outs['value'] = [None]
     def intHasChanged(self, text):
         try:
-            self.outs['value'][0] = int(text)
+            self.outs['value'] = [int(text)]
             print(f"int has changed: {self.outs['value']}")
         except:
             pass
@@ -83,7 +83,7 @@ class float_literal():
         self.outs['value'] = [None]
     def floatHasChanged(self, text):
         try:
-            self.outs['value'][0] = float(text)
+            self.outs['value'] = [float(text)]
             print(f"float has changed: {self.outs['value']}")
         except:
             pass
@@ -177,17 +177,22 @@ class add_Node():
         self.outs['result'] = [None]
         
     def execute(self):
+        print("Sequence continued with add block")
         self.ins['A'][0] = self.ins['A'][1].outs[self.ins['A'][2]][0]
         self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
         av = self.ins['A'][0]
         bv = self.ins['B'][0]
-        if (type(av) ==  type(bv)):
+        print(f"A: {av}, B:{bv}")
+        if (type(av) == type(bv)):
             if type(av) == bool:
                 self.outs['result'][0] = av or bv
+                print(f"result: {av or bv}")
             else:
                 self.outs['result'][0] = av + bv
+                print(f"result: {av + bv}")
         elif (type(av) != str and type(bv) != str) or (type(av) != bool and type(bv) != bool):
-            self.outs['result'][0] = av or bv
+            self.outs['result'][0] = av + bv
+            print(f"result: {av + bv}")
         
 class sub_Node():
     def __init__(self, title, ins, outs):
@@ -205,8 +210,10 @@ class sub_Node():
         self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
         av = self.ins['A'][0]
         bv = self.ins['B'][0]
+        print(f"A: {av}, B:{bv}")
         if (type(av) == int or type(av) == float) and (type(bv) == int or type(bv) == float):
             self.outs['result'][0] = av - bv
+            print(f"result: {av or bv}")
             
 class mult_Node():
     def __init__(self, title, ins, outs):
@@ -224,10 +231,13 @@ class mult_Node():
         self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
         av = self.ins['A'][0]
         bv = self.ins['B'][0]
+        print(f"A: {av}, B:{bv}")
         if (type(av) == int or type(av) == float) and (type(bv) == int or type(bv) == float):
-            self.outs['result'][0] = av - bv
+            self.outs['result'][0] = av * bv
+            print(f"result: {av * bv}")
         elif type(av) == bool and type(bv) == bool:
             self.outs['result'][0] = av and bv
+            print(f"result: {av and bv}")
             
 class div_Node():
     def __init__(self, title, ins, outs):
@@ -245,8 +255,10 @@ class div_Node():
         self.ins['B'][0] = self.ins['B'][1].outs[self.ins['B'][2]][0]
         av = self.ins['A'][0]
         bv = self.ins['B'][0]
+        print(f"A: {av}, B:{bv}")
         if (type(av) == int or type(av) == float) and (type(bv) == int or type(bv) == float) and (bv != 0):
             self.outs['result'][0] = av / bv
+            print(f"result: {av / bv}")
         
     
             

@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QGraphicsProxyWidget
 )
 from PyQt6.QtGui import QBrush, QColor, QPen, QPainter, QAction, QFont, QIntValidator, QDoubleValidator
-from PyQt6.QtCore import Qt, QPointF, QRectF
+from PyQt6.QtCore import Qt, QPointF, QRectF, QLocale
 
 def drawPointsConnections(self, block_type, x, y,width):
     '''Bloques de flujo'''
@@ -85,7 +85,9 @@ def drawPointsConnections(self, block_type, x, y,width):
 
         # Add QLineEdit for string literal's value
         self.float_input = QLineEdit()
-        double_validator = QDoubleValidator()
+        double_validator = QDoubleValidator(-99999999.0, 9999999.0, 10)
+        locale = QLocale(QLocale.Language.C)
+        double_validator.setLocale(locale)
         self.float_input.setValidator(double_validator) #Añadir un validador para que solo se puedan escribir numeros de tipo double
         self.float_input.setPlaceholderText("Value")
         self.float_input.setMinimumSize(70, 20)  # Set the minimum size for the QLineEdit
