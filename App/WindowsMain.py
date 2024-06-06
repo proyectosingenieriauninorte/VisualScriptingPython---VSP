@@ -5,6 +5,7 @@ from App.Blocks.LinkedList import *
 from PyQt6.QtGui import QFont
 
 class MainWindow(QMainWindow):
+    # Constructor que inicializa el apartado visual de la ventana con sus respecivos objetos visuales y estilos
     def __init__(self):
         super().__init__()
         self.line_blocks = []
@@ -235,9 +236,11 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
 
+        # Conectar el evento de clic derecho en el área de trabajo con el menú contextual (Bloques)
         self.work_area.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
         self.work_area.customContextMenuRequested.connect(self.show_context_menu)
 
+    # Funcion para el menu superior de la ventana
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -251,6 +254,7 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
         self.actionExport.setText(_translate("MainWindow", "Export"))
         self.actionSearch.setText(_translate("MainWindow", "Search"))
 
+    # Funcion para mostrar el menu contextual de los bloques
     def show_context_menu(self, pos):
         context_menu = QMenu(self)
 
@@ -265,9 +269,10 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
 
         context_menu.exec(self.work_area.mapToGlobal(pos))
 
+    # Funcion para añadir un bloque a la escena con sus respectivos Nodos para su ejecucion
     def add_block(self, block_type, pos):
         # Convertir la posición del clic a coordenadas de la escena
-        
+        # Crear el nodo correspondiente al bloque
         if block_type == "On_Start":
             Node = On_Start_Node(block_type, {}, {})
             self.Sequence = LinkedList(Node, self.cmd)
@@ -294,16 +299,21 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
         elif block_type == "div":
             Node = div_Node(block_type, {}, {})
         
+        # Crear el bloque y añadirlo a la escena
         scene_pos = self.work_area.mapToScene(pos)
         block = BlockItem(self.graphics_scene, block_type, block_type, scene_pos.x(), scene_pos.y(), self, Node)  # Pasar self.graphics_scene como argumento
         self.graphics_scene.addItem(block)
 
+    # Funcion para añadir bloques al line_blocks
+    # line_blocks es una lista de bloques que se encuentran seleccionados para asignarles una linea de conexion
     def add_line_block(self, block):
         self.line_blocks.append(block)
     
+    # Funcion para resetear la lista de bloques seleccionados
     def reset_line_blocks(self):
         self.line_blocks = []
         
+    # Funcion para realizar la ejecucion de los bloques funcionales y mostrarlos en el cmd (Text Area)
     def run(self):
         self.Sequence.run()
         scrollbar = self.cmd.verticalScrollBar()

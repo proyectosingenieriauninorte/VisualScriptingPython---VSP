@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt
 
 class Point():
 
+    # Inicializador del punto del bloque con sus diferentes atributos
     def __init__(self, x, y, label, block_item, inout, validate=False):
         self.x = x
         self.y = y
@@ -17,6 +18,7 @@ class Point():
         self.point_connect = None
         self.add_connection_point()
 
+    # Agregar un punto de conexión al bloque
     def add_connection_point(self):
         self.circle = QGraphicsEllipseItem(self.x - 4, self.y - 4, 8, 8, self.block_item)
         self.circle.setPen(QPen(Qt.GlobalColor.red))
@@ -33,6 +35,7 @@ class Point():
         else:
             text.setPos(self.x + 5, self.y - 8)
 
+    # Agregar un bloque de conexión al punto (Con que bloque se conecta y con cual punto de dicho bloque)
     def add_conection_block(self, block, point):
         self.block_connect = block
         self.point_connect = point

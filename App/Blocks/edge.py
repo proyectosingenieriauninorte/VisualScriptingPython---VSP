@@ -4,6 +4,7 @@ from PyQt6.QtCore import QPointF, Qt
 from math import atan2, cos, sin, radians
 
 class Line(QGraphicsPathItem):
+    # Inicializar la línea con sus diferentes atributos
     def __init__(self, start_point, end_point, arrow, color=QColor(0, 255, 255), thickness=2, style=Qt.PenStyle.DashLine):
         super().__init__()
         self.start_point = start_point
@@ -17,8 +18,9 @@ class Line(QGraphicsPathItem):
         self.setPen(QPen(self.color, self.thickness, self.style))
         self.update_path()
 
+    # Actualizar la ruta de la línea.
     def update_path(self):
-        # Create a Bezier curve path
+        # Crear una ruta de curva Bézier
         path = QPainterPath(self.start_point)
         cp1 = QPointF((self.start_point.x() + self.end_point.x()) / 2, self.start_point.y())
         cp2 = QPointF((self.start_point.x() + self.end_point.x()) / 2, self.end_point.y())
@@ -27,6 +29,7 @@ class Line(QGraphicsPathItem):
         self.setPath(path)
         #self.update_arrow()
 
+    # Actualizar la flecha de la línea (Parcialmente implementado)
     def update_arrow(self):
         if self.arrow_item != None:
             pass
@@ -36,6 +39,7 @@ class Line(QGraphicsPathItem):
         else:
             self.add_arrow(self.end_point, self.start_point)
     
+    # Agregar una flecha a la línea
     def add_arrow(self, start_point, end_point):
         arrow_size = 10
         angle = atan2(end_point.y() - start_point.y(), end_point.x() - start_point.x())

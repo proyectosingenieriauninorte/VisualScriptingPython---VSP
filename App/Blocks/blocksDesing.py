@@ -1,11 +1,8 @@
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QDockWidget, QListWidget, QWidget, 
-    QVBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QGraphicsTextItem, QMenu, QGraphicsEllipseItem,
-    QLineEdit, QGraphicsProxyWidget
-)
-from PyQt6.QtGui import QBrush, QColor, QPen, QPainter, QAction, QFont, QIntValidator, QDoubleValidator
-from PyQt6.QtCore import Qt, QPointF, QRectF, QLocale
+from PyQt6.QtWidgets import QGraphicsTextItem, QLineEdit, QGraphicsProxyWidget
+from PyQt6.QtGui import QIntValidator, QDoubleValidator
+from PyQt6.QtCore import Qt, QPointF, QLocale
 
+# Funcion que se encarga de dibujar los puntos de conexión de los bloques y sus respectivas etiquetas dependiendo al bloque que pertenezcan
 def drawPointsConnections(self, block_type, x, y,width):
     '''Bloques de flujo'''
     if block_type== 'On_Start' :

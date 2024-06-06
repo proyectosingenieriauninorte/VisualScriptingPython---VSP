@@ -61,13 +61,14 @@ class BlockItem(QGraphicsRectItem):
         }
         return QColor(colors.get(block_type, "#FF4500")) 
 
-    
+    # Método para agregar puntos de conexión al bloque
     def add_connection_point(self, point_name, label, inout=False):
         point = self.connection_points[point_name]
         circle = Point(point.x(), point.y(), label, self, inout)
         self.points[point_name] = circle
         #self.scene.addItem(text)
     
+    # Sobreescribir el método de pintura
     def paint(self, painter, option, widget):
         # Draw the main rounded rectangle
         path = QPainterPath()
@@ -184,22 +185,27 @@ class BlockItem(QGraphicsRectItem):
                                 self.windows.line_blocks[0][0].points[self.windows.line_blocks[0][2].label].circle.setBrush(QBrush(Qt.GlobalColor.blue))
                                 self.windows.reset_line_blocks()
 
-    # Override mouse move event
+    # Evento de movimiento del mouse para arrastrar el bloque en la escena
     def mouseMoveEvent(self, event):
+        # Si se está arrastrando el bloque y el botón izquierdo del mouse está presionado
         if self.is_dragging and event.buttons() & Qt.MouseButton.LeftButton:
+            # Obtener la nueva posición del bloque
             new_pos = event.scenePos()
             self.setPos(new_pos.x() - self.x - 90, new_pos.y() - self.y - 10)   
+            # Actualizar la posición de la linea de conexión con referencia a la nueva posicion del centro del circulo (punto) asociado al bloque
             for line in self.lines:
                 circle_center_scene = line[2].circle.sceneBoundingRect().center()
                 circle_center_view = self.scene.views()[0].mapFromScene(circle_center_scene)
                 circle_center_square = self.scene.views()[0].mapToScene(circle_center_view)
+                # Actualizar la posición del punto de inicio o fin de la linea dependiendo si es in u out
                 if line[1]:
                     line[0].start_point = QPointF(circle_center_square.x(), circle_center_square.y())
                 else:
                     line[0].end_point = QPointF(circle_center_square.x(), circle_center_square.y())
+                # Actualizar la posición de la linea
                 line[0].update_path()
 
-    # Override mouse release event
+    # Cambiar el cursor cuando el mouse se encuentra sobre el bloque
     def mouseReleaseEvent(self, event):
         if self.header_rect.contains(event.pos()):
             self.setCursor(Qt.CursorShape.ClosedHandCursor)
@@ -207,9 +213,12 @@ class BlockItem(QGraphicsRectItem):
             self.setCursor(Qt.CursorShape.ArrowCursor)
         self.is_dragging = False
 
+    # Evento de doble click en el bloque para eliminarlo
     def mouseDoubleClickEvent(self, event):
+        # Si el botón izquierdo del mouse es presionado
         if event.button() == Qt.MouseButton.LeftButton:
             if self:
+                # Eliminar el bloque de la escena con sus respectivas conexiones tanto de el mismo como de sus bloques adyacentes
                 current = self.LLNode
                 for key in current.outs:
                     if key != "flow_out":
