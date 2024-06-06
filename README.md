@@ -26,7 +26,8 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
    
 3. **Instala los requerimientos del proyecto**
  ```bash
-pip install -r "requeriments txt" ```
+pip install -r "requeriments txt"
+ ```
 
 5. **Ejecuta desde el main el programa**
 
