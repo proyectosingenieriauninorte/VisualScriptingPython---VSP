@@ -10,7 +10,19 @@ class MainWindow(QMainWindow):
         self.line_blocks = []
         self.setWindowTitle("Visual Scripting")
         self.resize(1280, 720)
-        self.setStyleSheet("Background-color: rgb(43, 48, 77);")
+        self.setStyleSheet("""
+QMainWindow {
+    Background-color: rgb(43, 48, 77);
+}
+QMenu::item {
+    Background-color: rgb(43, 48, 77);
+    color: white; /* Color del texto del elemento del menú */
+}
+                           
+QMenu::item:selected { /* when user selects item using mouse or keyboard */
+    Background-color: rgb(63, 67, 103);
+}
+""")
         self.centralwidget = QWidget(parent=self)
         self.centralwidget.setObjectName("centralwidget")
         self.icon_only_widget = QWidget(parent=self.centralwidget)
@@ -89,7 +101,8 @@ class MainWindow(QMainWindow):
 "QTextEdit {\n"
 "    \n"
 "    border-color: rgb(118, 171, 174);\n"
-"}")
+"}"
+)
         self.WorkspaceWidget.setObjectName("WorkspaceWidget")
         self.work_area = QGraphicsView(parent=self.WorkspaceWidget)
         self.work_area.setGeometry(QtCore.QRect(0, 0, 881, 401))
