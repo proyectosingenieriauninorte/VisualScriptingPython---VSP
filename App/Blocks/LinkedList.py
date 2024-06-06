@@ -1,11 +1,18 @@
 class LinkedList():
-    def __init__(self, start):
+    def __init__(self, start, cmd):
         self.start = start
+        self.cmd = cmd
         
     def run(self):
         currentNode = self.start
         while (currentNode != None):
-            currentNode.execute()
+            if currentNode.title == 'log':
+                if self.cmd.toPlainText() == '':
+                    self.cmd.setText(F">> {currentNode.execute()}")
+                else:
+                    self.cmd.setText(F"{self.cmd.toPlainText()}\n>> {currentNode.execute()}")
+            else:
+                currentNode.execute()
             currentNode = currentNode.outs['flow_out'][0]
         print("Sequence Terminated Succesfully")
         
@@ -32,8 +39,10 @@ class log_Node():
         try:
             str(self.ins['value'][0])
             print(f"printed from log: {self.ins['value'][0]}")
+            return f"{self.ins['value'][0]}"
         except:
             print("Code Block log, could not convert value to string, no print available")
+            return "Code Block log, could not convert value to string, no print available"
           
 class str_literal():
     def __init__(self, title, ins, outs):

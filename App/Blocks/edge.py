@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt, QLineF, QPointF
 from math import cos, sin, atan2, radians, degrees
 
 class Line(QGraphicsPathItem):
-    def __init__(self, start_point, end_point, color=QColor(0, 255, 255), thickness=2,  style=Qt.PenStyle.DashLine):
+    def __init__(self, start_point, end_point, arrow, color=QColor(0, 255, 255), thickness=2,  style=Qt.PenStyle.DashLine):
         super().__init__()
         self.setPen(QPen(color, thickness, style))
 
@@ -15,8 +15,11 @@ class Line(QGraphicsPathItem):
         path.cubicTo(cp1, cp2, end_point)
 
         self.setPath(path)
-        
-        self.add_arrow(start_point,end_point)
+
+        if arrow:
+            self.add_arrow(start_point,end_point)
+        else:
+            self.add_arrow(end_point,start_point)
     
     def add_arrow(self, start_point, end_point):
         arrow_size = 10

@@ -84,7 +84,7 @@ def drawPointsConnections(self, block_type, x, y,width):
         self.add_connection_point('value', "value", True)
 
         # Add QLineEdit for string literal's value
-        self.value_input = QLineEdit()
+        self.float_input = QLineEdit()
         double_validator = QDoubleValidator()
         self.float_input.setValidator(double_validator) #Añadir un validador para que solo se puedan escribir numeros de tipo double
         self.float_input.setPlaceholderText("Value")

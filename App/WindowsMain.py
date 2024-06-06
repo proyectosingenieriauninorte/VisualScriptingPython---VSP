@@ -229,7 +229,7 @@ class MainWindow(QMainWindow):
         
         if block_type == "On_Start":
             Node = On_Start_Node(block_type, {}, {})
-            self.Sequence = LinkedList(Node)
+            self.Sequence = LinkedList(Node, self.cmd)
         elif block_type == "log":
             Node = log_Node(block_type, {}, {})
         elif block_type == "str_lit":

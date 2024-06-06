@@ -1,5 +1,5 @@
 import App.Blocks.blocksDesing as blocksDesing
-from PyQt6.QtWidgets import QGraphicsRectItem, QGraphicsTextItem, QGraphicsEllipseItem
+from PyQt6.QtWidgets import QGraphicsRectItem, QGraphicsSceneMouseEvent, QGraphicsTextItem, QGraphicsEllipseItem
 from PyQt6.QtGui import QBrush, QColor, QPen, QPainterPath
 from PyQt6.QtCore import Qt, QRectF
 from App.Blocks.point import Point
@@ -17,6 +17,7 @@ class BlockItem(QGraphicsRectItem):
         self.setPen(QPen(Qt.GlobalColor.black))
         self.setBrush(QBrush(QColor("#333333")))
         self.points = {}
+        self.lines = []
 
         #Linked List Node
         self.LLNode = LLNode
@@ -95,6 +96,7 @@ class BlockItem(QGraphicsRectItem):
                 for point in self.points.values():
                     if point.circle.contains(event.pos()):
                         if len(self.windows.line_blocks) == 0:
+                            print(point)
                             self.windows.add_line_block((self, event.scenePos(), point))
                             point.circle.setBrush(QBrush(Qt.GlobalColor.green))
                         else:
@@ -103,20 +105,19 @@ class BlockItem(QGraphicsRectItem):
                                     print("Same point")
                                 else:
                                     if (point.validate == False) and (self.windows.line_blocks[0][2].validate == False):
-                                
-                                        
                                         if (self.windows.line_blocks[0][2].inout == True):
                                             if (("flow" in self.windows.line_blocks[0][2].label) and ("flow" in point.label)):
                                                 self.windows.line_blocks[0][0].LLNode.outs[self.windows.line_blocks[0][2].label][0] = self.LLNode
                                                 self.LLNode.ins[point.label][0] = self.windows.line_blocks[0][0].LLNode
-                                                
                                                 print("Conection between blocks")
                                                 self.windows.line_blocks[0][2].add_conection_block(self, point)
                                                 point.add_conection_block(self.windows.line_blocks[0][0], self.windows.line_blocks[0][2])
                                                 new_pos = event.scenePos()
                                                 point.validate = True
                                                 self.windows.line_blocks[0][2].validate = True
-                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos, True)
+                                                self.windows.line_blocks[0][0].lines.append(line_temp)
+                                                self.lines.append(line_temp)
                                                 self.scene.addItem(line_temp)
                                                 
                                             elif (("flow" in self.windows.line_blocks[0][2].label) or ("flow" in point.label)):
@@ -131,7 +132,9 @@ class BlockItem(QGraphicsRectItem):
                                                 new_pos = event.scenePos()
                                                 point.validate = True
                                                 self.windows.line_blocks[0][2].validate = True
-                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                line_temp = Line(new_pos, self.windows.line_blocks[0][1], False)
+                                                self.windows.line_blocks[0][0].lines.append(line_temp)
+                                                self.lines.append(line_temp)
                                                 self.scene.addItem(line_temp)
                                         else:
                                             if (("flow" in self.windows.line_blocks[0][2].label) and ("flow" in point.label)):
@@ -143,7 +146,9 @@ class BlockItem(QGraphicsRectItem):
                                                 new_pos = event.scenePos()
                                                 point.validate = True
                                                 self.windows.line_blocks[0][2].validate = True
-                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                line_temp = Line(new_pos, self.windows.line_blocks[0][1], True)
+                                                self.windows.line_blocks[0][0].lines.append(line_temp)
+                                                self.lines.append(line_temp)
                                                 self.scene.addItem(line_temp)
                                             elif (("flow" in self.windows.line_blocks[0][2].label) or ("flow" in point.label)):
                                                 print("flow con no flow")    
@@ -157,7 +162,9 @@ class BlockItem(QGraphicsRectItem):
                                                 new_pos = event.scenePos()
                                                 point.validate = True
                                                 self.windows.line_blocks[0][2].validate = True
-                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos)
+                                                line_temp = Line(self.windows.line_blocks[0][1], new_pos, False)
+                                                self.windows.line_blocks[0][0].lines.append(line_temp)
+                                                self.lines.append(line_temp)
                                                 self.scene.addItem(line_temp)
                                         print(f"Bloque 1 creo... es {self.windows.line_blocks[0][0].block_type} y el point es {self.windows.line_blocks[0][2].label}")
                                         print(self.windows.line_blocks[0][0].LLNode.ins)
@@ -183,3 +190,15 @@ class BlockItem(QGraphicsRectItem):
         else:
             self.setCursor(Qt.CursorShape.ArrowCursor)
         self.is_dragging = False
+
+    def mouseDoubleClickEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            if self:
+                for point in self.points.values():
+                    if point.point_connect != None:
+                        point.point_connect.validate = False
+                self.scene.removeItem(self)
+                for line in self.lines:
+                    self.scene.removeItem(line)
+
+

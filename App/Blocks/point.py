@@ -12,6 +12,8 @@ class Point():
         self.inout = inout
         self.validate = validate
         self.connections = []
+        self.block_connect = None
+        self.point_connect = None
         self.add_connection_point()
 
     def add_connection_point(self):
@@ -29,8 +31,6 @@ class Point():
             text.setPos(self.x - text.boundingRect().width() - 5, self.y - 8)
         else:
             text.setPos(self.x + 5, self.y - 8)
-
-    
 
     def add_conection_block(self, block, point):
         self.block_connect = block

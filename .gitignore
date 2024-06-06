@@ -4325,3 +4325,9 @@ venv/Scripts/python.exe
 venv/Scripts/pythonw.exe
 venv/Scripts/pyuic6.exe
 venv/Scripts/qt6-tools.exe
+App/__pycache__/WindowsMain.cpython-310.pyc
+App/Blocks/__pycache__/Block.cpython-310.pyc
+App/Blocks/__pycache__/blocksDesing.cpython-310.pyc
+App/Blocks/__pycache__/edge.cpython-310.pyc
+App/Blocks/__pycache__/LinkedList.cpython-310.pyc
+App/Blocks/__pycache__/point.cpython-310.pyc
