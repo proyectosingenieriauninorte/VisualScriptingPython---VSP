@@ -2,7 +2,8 @@ from App.Blocks.Block import BlockItem
 from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QWidget, QMenu, QLineEdit, QTextEdit, QMenuBar, QGraphicsScene, QGraphicsView
 from PyQt6 import QtCore, QtGui
 from App.Blocks.LinkedList import *
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QIcon
+import os
 
 class MainWindow(QMainWindow):
     # Constructor que inicializa el apartado visual de la ventana con sus respecivos objetos visuales y estilos
@@ -24,6 +25,20 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
     Background-color: rgb(63, 67, 103);
 }
 """)
+        icon_path = os.path.join(os.path.dirname(__file__), "..", "Images", "python.png")
+        
+        # Verificar si el archivo de icono existe
+        if not os.path.exists(icon_path):
+            print(f"Error: El archivo de icono no se encontró en {icon_path}")
+            return
+
+        # Carga el icono y lo establece como el icono de la ventana
+        icon = QIcon(icon_path)
+        if icon.isNull():
+            print("Error: El icono no se pudo cargar.")
+            return
+
+        self.setWindowIcon(icon)
         self.centralwidget = QWidget(parent=self)
         self.centralwidget.setObjectName("centralwidget")
         self.icon_only_widget = QWidget(parent=self.centralwidget)
