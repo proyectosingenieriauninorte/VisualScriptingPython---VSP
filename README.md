@@ -12,8 +12,8 @@ Visual Scripting Python (VSP) es una herramienta que permite la creación de scr
 
 ### Requisitos Previos
 
-- Tener Docker instalado en tu sistema.
 - Clonar el repositorio del proyecto.
+- Instalar los requerimientos dentro de requirements.txt
 
 ### Construcción y Ejecución del Contenedor Docker
 
