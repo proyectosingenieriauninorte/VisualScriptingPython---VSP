@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
 # Instala PyQt6
 RUN pip install -r requirements.txt
 
+EXPOSE 8080
+
 # Define el comando de entrada para iniciar Xvfb
 ENTRYPOINT [ "/usr/bin/xvfb-run", "--auto-servernum", "--server-args='-ac -screen 0 1024x768x24'" ]
 
